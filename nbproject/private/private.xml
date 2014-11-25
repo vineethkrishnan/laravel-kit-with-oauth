@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/var/www/html/listing/app/routes.php</file>
+            <file>file:/var/www/html/listing/app/views/frontend/auth/twitter.blade.php</file>
+            <file>file:/var/www/html/listing/app/config/database.php</file>
+            <file>file:/var/www/html/listing/app/views/frontend/auth/signup.blade.php</file>
+            <file>file:/var/www/html/listing/app/config/app.php</file>
+            <file>file:/var/www/html/listing/app/database/migrations/2014_11_24_104729_update_users_add_twitter_id.php</file>
+            <file>file:/var/www/html/listing/vendor/artdarek/oauth-4-laravel/src/config/config.php</file>
+            <file>file:/var/www/html/listing/app/controllers/AuthController.php</file>
+            <file>file:/var/www/html/listing/app/database/migrations/2013_03_23_193214_update_users_table.php</file>
+            <file>file:/var/www/html/listing/app/config/packages/artdarek/oauth-4-laravel/config.php</file>
+            <file>file:/var/www/html/listing/app/models/User.php</file>
+            <file>file:/var/www/html/listing/app/config/mail.php</file>
+        </group>
+    </open-files>
+</project-private>
