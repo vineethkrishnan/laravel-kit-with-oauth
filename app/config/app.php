@@ -104,9 +104,9 @@ return array(
         
         // Accessory service providers
         'Cartalyst\Sentry\SentryServiceProvider',
-        'Artdarek\OAuth\OAuthServiceProvider',
-        'Way\Generators\GeneratorsServiceProvider',
-        'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
+       // 'Artdarek\OAuth\OAuthServiceProvider',
+       // 'Way\Generators\GeneratorsServiceProvider',
+       // 'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
     ),
     /*
       |--------------------------------------------------------------------------
