@@ -1,7 +1,6 @@
 <?php
 
 use Cartalyst\Sentry\Users\Eloquent\User as SentryUserModel;
-use OAuth;
 
 class User extends SentryUserModel {
 
