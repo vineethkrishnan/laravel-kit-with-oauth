@@ -1,14 +1,16 @@
 <?php
 
-class AuthController extends BaseController {
-
+class AuthController extends BaseController
+{
     /**
-     * User Model
+     * User Model.
+     *
      * @var User
      */
     protected $userModel;
 
-    public function __construct(User $user) {
+    public function __construct(User $user)
+    {
         $this->userModel = $user;
         parent::__construct();
     }
@@ -18,7 +20,8 @@ class AuthController extends BaseController {
      *
      * @return View
      */
-    public function getSignin() {
+    public function getSignin()
+    {
         // Is the user logged in?
         if (Sentry::check()) {
             return Redirect::route('account');
@@ -33,12 +36,13 @@ class AuthController extends BaseController {
      *
      * @return Redirect
      */
-    public function postSignin() {
+    public function postSignin()
+    {
         // Declare the rules for the form validation
-        $rules = array(
-            'email' => 'required|email',
+        $rules = [
+            'email'    => 'required|email',
             'password' => 'required|between:3,32',
-        );
+        ];
 
         // Create a new validator instance from our validation rules
         $validator = Validator::make(Input::all(), $rules);
@@ -80,7 +84,8 @@ class AuthController extends BaseController {
      *
      * @return View
      */
-    public function getSignup() {
+    public function getSignup()
+    {
         // Is the user logged in?
         if (Sentry::check()) {
             return Redirect::route('account');
@@ -95,16 +100,17 @@ class AuthController extends BaseController {
      *
      * @return Redirect
      */
-    public function postSignup() {
+    public function postSignup()
+    {
         // Declare the rules for the form validation
-        $rules = array(
-            'first_name' => 'required|min:3',
-            'last_name' => 'required|min:3',
-            'email' => 'required|email|unique:users',
-            'email_confirm' => 'required|email|same:email',
-            'password' => 'required|between:3,32',
+        $rules = [
+            'first_name'       => 'required|min:3',
+            'last_name'        => 'required|min:3',
+            'email'            => 'required|email|unique:users',
+            'email_confirm'    => 'required|email|same:email',
+            'password'         => 'required|between:3,32',
             'password_confirm' => 'required|same:password',
-        );
+        ];
 
         // Create a new validator instance from our validation rules
         $validator = Validator::make(Input::all(), $rules);
@@ -117,23 +123,23 @@ class AuthController extends BaseController {
 
         try {
             // Register the user
-            $user = Sentry::register(array(
+            $user = Sentry::register([
                         'first_name' => Input::get('first_name'),
-                        'last_name' => Input::get('last_name'),
-                        'email' => Input::get('email'),
-                        'password' => Input::get('password'),
-            ));
+                        'last_name'  => Input::get('last_name'),
+                        'email'      => Input::get('email'),
+                        'password'   => Input::get('password'),
+            ]);
 
             // Data to be used on the email view
-            $data = array(
-                'user' => $user,
+            $data = [
+                'user'          => $user,
                 'activationUrl' => URL::route('activate', $user->getActivationCode()),
-            );
+            ];
 
             // Send the activation code through email
-            Mail::send('emails.register-activate', $data, function($m) use ($user) {
-                $m->to($user->email, $user->first_name . ' ' . $user->last_name);
-                $m->subject('Welcome ' . $user->first_name);
+            Mail::send('emails.register-activate', $data, function ($m) use ($user) {
+                $m->to($user->email, $user->first_name.' '.$user->last_name);
+                $m->subject('Welcome '.$user->first_name);
             });
 
             // Redirect to the register page
@@ -147,28 +153,32 @@ class AuthController extends BaseController {
     }
 
     /**
-     * Login with the facebook
+     * Login with the facebook.
      */
-    public function getFacebookAuthentication() {
-        $result = $this->userModel->facebookAuth(Input::get('code', NULL));
+    public function getFacebookAuthentication()
+    {
+        $result = $this->userModel->facebookAuth(Input::get('code', null));
         if (is_string($result)) {
             return Redirect::away($result);
         }
+
         return Redirect::to('/account');
     }
 
     /**
-     * Login with the twitter
+     * Login with the twitter.
      */
-    public function getTwitterAuthentication() {
+    public function getTwitterAuthentication()
+    {
         try {
             // get data from input
-            $token = Input::get('oauth_token', NULL);
-            $verify = Input::get('oauth_verifier', NULL);
+            $token = Input::get('oauth_token', null);
+            $verify = Input::get('oauth_verifier', null);
             $result = $this->userModel->twitterAuth($token, $verify);
             if (is_string($result)) {
                 return Redirect::away($result);
             }
+
             return Redirect::to('/account');
         } catch (UserNotRegisteredException $e) {
             return Redirect::route('twitter-email')->with('error', 'We didnt find any account connected with your twitter account, please create an account or login with your email id and password to connect with the twitter account');
@@ -177,18 +187,21 @@ class AuthController extends BaseController {
         }
     }
 
-    public function getLinkedinAuthentication() {
+    public function getLinkedinAuthentication()
+    {
 
         // get data from input
-        $code = Input::get('code', NULL);
+        $code = Input::get('code', null);
         $result = $this->userModel->linkedinAuth($code);
         if (is_string($result)) {
             return Redirect::away($result);
         }
+
         return Redirect::to('/account');
     }
 
-    public function getTwitterMail() {
+    public function getTwitterMail()
+    {
 
         // Is the user logged in?
         if (Sentry::check()) {
@@ -202,12 +215,13 @@ class AuthController extends BaseController {
         return View::make('frontend.auth.twitter', compact('twitter'));
     }
 
-    public function postTwitterMail() {
+    public function postTwitterMail()
+    {
         // Declare the rules for the form validation
-        $rules = array(
-            'email' => 'required|email|unique:users',
-            'email_confirm' => 'required|email|same:email'
-        );
+        $rules = [
+            'email'         => 'required|email|unique:users',
+            'email_confirm' => 'required|email|same:email',
+        ];
 
         // Create a new validator instance from our validation rules
         $validator = Validator::make(Input::all(), $rules);
@@ -222,9 +236,10 @@ class AuthController extends BaseController {
             $user = Sentry::findUserByLogin(Input::get('email'));
 
             $this->messageBag->add('email', Lang::get('auth/message.twitter_email_exists'));
+
             return Redirect::back()->withInput()->withErrors($this->messageBag);
         } catch (\Cartalyst\Sentry\Users\UserNotFoundException $ex) {
-        // Register the user
+            // Register the user
             $this->userModel->twitterLogin($twitter, Input::get('email'));
 
             // remove twitter details from session
@@ -242,10 +257,12 @@ class AuthController extends BaseController {
     /**
      * User account activation page.
      *
-     * @param  string  $actvationCode
+     * @param string $actvationCode
+     *
      * @return
      */
-    public function getActivate($activationCode = null) {
+    public function getActivate($activationCode = null)
+    {
         // Is the user logged in?
         if (Sentry::check()) {
             return Redirect::route('account');
@@ -276,7 +293,8 @@ class AuthController extends BaseController {
      *
      * @return View
      */
-    public function getForgotPassword() {
+    public function getForgotPassword()
+    {
         // Show the page
         return View::make('frontend.auth.forgot-password');
     }
@@ -286,11 +304,12 @@ class AuthController extends BaseController {
      *
      * @return Redirect
      */
-    public function postForgotPassword() {
+    public function postForgotPassword()
+    {
         // Declare the rules for the validator
-        $rules = array(
+        $rules = [
             'email' => 'required|email',
-        );
+        ];
 
         // Create a new validator instance from our dynamic rules
         $validator = Validator::make(Input::all(), $rules);
@@ -306,14 +325,14 @@ class AuthController extends BaseController {
             $user = Sentry::getUserProvider()->findByLogin(Input::get('email'));
 
             // Data to be used on the email view
-            $data = array(
-                'user' => $user,
+            $data = [
+                'user'              => $user,
                 'forgotPasswordUrl' => URL::route('forgot-password-confirm', $user->getResetPasswordCode()),
-            );
+            ];
 
             // Send the activation code through email
-            Mail::send('emails.forgot-password', $data, function($m) use ($user) {
-                $m->to($user->email, $user->first_name . ' ' . $user->last_name);
+            Mail::send('emails.forgot-password', $data, function ($m) use ($user) {
+                $m->to($user->email, $user->first_name.' '.$user->last_name);
                 $m->subject('Account Password Recovery');
             });
         } catch (Cartalyst\Sentry\Users\UserNotFoundException $e) {
@@ -329,10 +348,12 @@ class AuthController extends BaseController {
     /**
      * Forgot Password Confirmation page.
      *
-     * @param  string  $passwordResetCode
+     * @param string $passwordResetCode
+     *
      * @return View
      */
-    public function getForgotPasswordConfirm($passwordResetCode = null) {
+    public function getForgotPasswordConfirm($passwordResetCode = null)
+    {
         try {
             // Find the user using the password reset code
             $user = Sentry::getUserProvider()->findByResetPasswordCode($passwordResetCode);
@@ -348,15 +369,17 @@ class AuthController extends BaseController {
     /**
      * Forgot Password Confirmation form processing page.
      *
-     * @param  string  $passwordResetCode
+     * @param string $passwordResetCode
+     *
      * @return Redirect
      */
-    public function postForgotPasswordConfirm($passwordResetCode = null) {
+    public function postForgotPasswordConfirm($passwordResetCode = null)
+    {
         // Declare the rules for the form validation
-        $rules = array(
-            'password' => 'required',
-            'password_confirm' => 'required|same:password'
-        );
+        $rules = [
+            'password'         => 'required',
+            'password_confirm' => 'required|same:password',
+        ];
 
         // Create a new validator instance from our dynamic rules
         $validator = Validator::make(Input::all(), $rules);
@@ -390,12 +413,12 @@ class AuthController extends BaseController {
      *
      * @return Redirect
      */
-    public function getLogout() {
+    public function getLogout()
+    {
         // Log the user out
         Sentry::logout();
 
         // Redirect to the users page
         return Redirect::route('home')->with('success', 'You have successfully logged out!');
     }
-
 }

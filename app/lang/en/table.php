@@ -1,7 +1,7 @@
 <?php
 
-return array(
+return [
 
-	'actions' => 'Actions'
+    'actions' => 'Actions',
 
-);
+];

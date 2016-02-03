@@ -11,4 +11,4 @@
 |
 */
 
-Artisan::add(new AppCommand);
+Artisan::add(new AppCommand());
