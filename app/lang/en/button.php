@@ -1,9 +1,9 @@
 <?php
 
-return array(
+return [
 
-	'edit'    => 'Edit',
-	'delete'  => 'Delete',
-	'restore' => 'Restore',
+    'edit'    => 'Edit',
+    'delete'  => 'Delete',
+    'restore' => 'Restore',
 
-);
+];

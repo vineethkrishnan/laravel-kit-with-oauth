@@ -1,5 +1,5 @@
 <?php
-	$presenter = new Illuminate\Pagination\BootstrapPresenter($paginator);
+    $presenter = new Illuminate\Pagination\BootstrapPresenter($paginator);
 ?>
 
 <div class="pagination">

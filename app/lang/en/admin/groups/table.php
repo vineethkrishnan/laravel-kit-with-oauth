@@ -1,10 +1,10 @@
 <?php
 
-return array(
+return [
 
-	'id'         => 'Id',
-	'name'       => 'Name',
-	'users'      => '# of Users',
-	'created_at' => 'Created at',
+    'id'         => 'Id',
+    'name'       => 'Name',
+    'users'      => '# of Users',
+    'created_at' => 'Created at',
 
-);
+];

@@ -1,7 +1,7 @@
 <?php
 
-class BaseController extends Controller {
-
+class BaseController extends Controller
+{
     /**
      * Message bag.
      *
@@ -14,12 +14,13 @@ class BaseController extends Controller {
      *
      * @return void
      */
-    public function __construct() {
+    public function __construct()
+    {
         // CSRF Protection
-        $this->beforeFilter('csrf', array('on' => 'post'));
+        $this->beforeFilter('csrf', ['on' => 'post']);
 
         //
-        $this->messageBag = new Illuminate\Support\MessageBag;
+        $this->messageBag = new Illuminate\Support\MessageBag();
     }
 
     /**
@@ -27,10 +28,10 @@ class BaseController extends Controller {
      *
      * @return void
      */
-    protected function setupLayout() {
+    protected function setupLayout()
+    {
         if (!is_null($this->layout)) {
             $this->layout = View::make($this->layout);
         }
     }
-
 }
